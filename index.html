@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة عيد الفطر - أكاديمية العرب</title>
     <style>
-        /* استدعاء خط TheSansArabic بوزن Black (900) */
+        /* تعريف الخط ليطابق الفئة المطلوبة */
         @font-face {
-            font-family: 'TheSansArabic-Black';
-            src: url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.eot');
-            src: url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.eot?#iefix') format('embedded-opentype'),
-            url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.woff2') format('woff2'),
-            url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.woff') format('woff'),
-            url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.ttf') format('truetype');
+            font-family: "TheSansArab";
+            src: url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.woff2') format('woff2');
             font-weight: 900;
             font-style: normal;
+        }
+
+        /* الفئة المطلوبة بالضبط */
+        .text-thesans-black {
+            font-family: "TheSansArab", sans-serif;
+            font-weight: 900;
         }
 
         body { font-family: 'Arial', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
@@ -34,15 +36,15 @@
 
 <div class="card-container" id="input-section">
     <img src="logo.png" class="logo" onerror="this.style.display='none'">
-    <h2>تهنئة عيد الفطر المبارك</h2>
+    <h2 class="text-thesans-black">تهنئة عيد الفطر المبارك</h2>
     <input type="text" id="userName" placeholder="اكتب الاسم هنا..." maxlength="60">
-    <button class="btn btn-green" onclick="createGreeting()">إنشاء البطاقة</button>
+    <button class="btn btn-green text-thesans-black" onclick="createGreeting()">إنشاء البطاقة</button>
 </div>
 
 <div class="card-container" id="output-section">
     <canvas id="greetingCanvas"></canvas>
-    <button class="btn btn-red" onclick="downloadGreeting()">تحميل الصورة</button>
-    <button class="btn btn-gray" onclick="location.reload()">تعديل الاسم</button>
+    <button class="btn btn-red text-thesans-black" onclick="downloadGreeting()">تحميل الصورة</button>
+    <button class="btn btn-gray text-thesans-black" onclick="location.reload()">تعديل الاسم</button>
 </div>
 
 <script>
@@ -65,14 +67,14 @@
     function draw(name) {
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
         
-        // إعدادات الخط: أسود، TheSansArabic-Black، سطر واحد
+        // الالتزام التام بالخط واللون الأسود
         ctx.fillStyle = "#000000";
         ctx.textAlign = "center";
         
-        // استخدام الخط المطلوب بوزن Black وحجم 85px
-        ctx.font = "900 85px 'TheSansArabic-Black', sans-serif";
+        // تطبيق الفئة text-thesans-black برمجياً على الـ Canvas
+        ctx.font = "900 85px 'TheSansArab', sans-serif";
 
-        // الإحداثي 1240 يضع الاسم تحت "كل عام وأنتم بخير" بمسافة واحدة دقيقة
+        // المسافة الدقيقة (تحت السطر بمسافة واحدة) كما في طلبك السابق
         ctx.fillText(name, canvas.width / 2, 1240);
 
         document.getElementById('input-section').style.display = 'none';
