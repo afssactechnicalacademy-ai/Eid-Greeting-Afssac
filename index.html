@@ -5,23 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة عيد الفطر - أكاديمية العرب</title>
     <style>
-        @font-face {
-            font-family: 'TheSansArabic';
-            src: url('https://db.onlinewebfonts.com/t/6182bc239999084cf732057636e1c2a1.eot');
-            src: url('https://db.onlinewebfonts.com/t/6182bc239999084cf732057636e1c2a1.eot?#iefix') format('embedded-opentype'),
-            url('https://db.onlinewebfonts.com/t/6182bc239999084cf732057636e1c2a1.woff2') format('woff2'),
-            url('https://db.onlinewebfonts.com/t/6182bc239999084cf732057636e1c2a1.woff') format('woff'),
-            url('https://db.onlinewebfonts.com/t/6182bc239999084cf732057636e1c2a1.ttf') format('truetype');
-            font-weight: 800;
-            font-style: normal;
-        }
-
-        body { font-family: 'TheSansArabic', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        body { font-family: 'Arial', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .card-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 380px; }
         .logo { width: 90px; margin-bottom: 15px; }
         h2 { color: #1a5e3a; font-size: 22px; margin-bottom: 20px; }
         input { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 18px; text-align: center; margin-bottom: 20px; box-sizing: border-box; outline: none; }
-        .btn { border: none; padding: 15px; border-radius: 12px; font-size: 18px; cursor: pointer; width: 100%; font-weight: bold; font-family: 'TheSansArabic', sans-serif; }
+        .btn { border: none; padding: 15px; border-radius: 12px; font-size: 18px; cursor: pointer; width: 100%; font-weight: bold; }
         .btn-green { background: #1a5e3a; color: white; }
         .btn-red { background: #d1202f; color: white; margin-top: 15px; }
         .btn-gray { background: #666; color: white; margin-top: 10px; }
@@ -64,13 +53,14 @@
     function draw(name) {
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
         
+        // إعدادات الخط: أسود، Arial Bold، سطر واحد
         ctx.fillStyle = "#000000";
         ctx.textAlign = "center";
         
-        // تطبيق خط TheSansArabic بوزن 800 وحجم مناسب
-        ctx.font = "800 82px 'TheSansArabic', sans-serif";
+        // استخدام Arial Bold بحجم 85px ليكون واضحاً ومتناسقاً
+        ctx.font = "bold 85px Arial";
 
-        // الارتفاع 1240 يمثل المسافة "تحت السطر بمسافة واحدة" كما طلبت
+        // الارتفاع 1240 ليكون تحت "كل عام وأنتم بخير" بمسافة واحدة
         ctx.fillText(name, canvas.width / 2, 1240);
 
         document.getElementById('input-section').style.display = 'none';
