@@ -3,90 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تهنئة عيد الفطر - أكاديمية العرب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;800&display=swap" rel="stylesheet">
+    <title>تهنئة أكاديمية العرب</title>
     <style>
+        /* تعريف الخط المطلوب Questv1 */
         @font-face {
             font-family: 'Questv1';
-            src: url('https://db.onlinewebfonts.com/t/79495b5c777d449f874f664a34b22301.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
+            src: url('https://fonts.gstatic.com/s/notosansarabic/v18/n4if49OCq7Bcn7S7SGH-T6Yv5_ax_N_Fxxm0SFpW.woff2'); /* رابط بديل موثوق */
+            font-weight: bold;
         }
-
-        body { font-family: 'Arial', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 380px; }
-        .logo { width: 100px; margin-bottom: 20px; }
-        input { font-family: 'Noto Sans Arabic', sans-serif; width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 18px; text-align: center; margin-bottom: 20px; outline: none; }
-        .btn { font-family: 'Noto Sans Arabic', sans-serif; border: none; padding: 15px; border-radius: 12px; font-size: 18px; cursor: pointer; width: 100%; font-weight: bold; }
-        .btn-green { background: #1a5e3a; color: white; }
-        .btn-red { background: #d1202f; color: white; margin-top: 15px; }
-        .btn-gray { background: #666; color: white; margin-top: 10px; }
-        
-        /* واجهات العرض */
-        #step2 { display: none; }
-        canvas { width: 100%; border-radius: 15px; background: #eee; }
+        body { font-family: 'Arial', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 350px; }
+        input { width: 100%; padding: 12px; margin: 20px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 18px; text-align: center; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-generate { background: #1a5e3a; color: white; }
+        .btn-download { background: #d1202f; color: white; margin-top: 15px; }
+        #result-section { display: none; }
+        canvas { width: 100%; border-radius: 10px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
 
-<div class="box" id="step1">
-    <img src="logo.png" class="logo">
-    <input type="text" id="nameInput" placeholder="اكتب الاسم هنا...">
-    <button class="btn btn-green" onclick="generateCard()">إنشاء البطاقة</button>
+<div class="container" id="input-section">
+    <h2 style="color:#1a5e3a">بطاقة تهنئة العيد</h2>
+    <input type="text" id="nameInput" placeholder="أدخل الاسم هنا..." maxlength="40">
+    <button class="btn-generate" onclick="startDrawing()">إنشاء البطاقة الآن</button>
 </div>
 
-<div class="box" id="step2">
+<div class="container" id="result-section">
     <canvas id="cardCanvas"></canvas>
-    <button class="btn btn-red" onclick="downloadImage()">تحميل الصورة</button>
-    <button class="btn btn-gray" onclick="location.reload()">تعديل الاسم</button>
+    <button class="btn-download" onclick="downloadImage()">تحميل البطاقة</button>
+    <button style="background:#888; color:white; margin-top:10px" onclick="location.reload()">تغيير الاسم</button>
 </div>
 
 <script>
     const canvas = document.getElementById('cardCanvas');
     const ctx = canvas.getContext('2d');
-    const cardImg = new Image();
+    const img = new Image();
     
-    // تأكد أن اسم ملف الخلفية الأصلية في GitHub هو Card.jpg (C كبيرة)
-    cardImg.src = 'Card.jpg'; 
+    // تأكد أن اسم الصورة في GitHub هو Card.jpg بنفس حالة الأحرف
+    img.src = 'Card.jpg'; 
 
-    function generateCard() {
+    function startDrawing() {
         const name = document.getElementById('nameInput').value.trim();
-        if (!name) return alert("من فضلك اكتب الاسم أولاً");
+        if (!name) return alert("من فضلك اكتب الاسم");
 
-        // مقاسات الصورة الأصلية المعتمدة (1080 عرض × 1920 طول)
+        // مقاسات التصميم الأصلي
         canvas.width = 1080;
         canvas.height = 1920;
 
-        // الخطوة الجوهرية: رسم الخلفية الأصلية على الـ Canvas أولاً
-        if (cardImg.complete) {
-            ctx.drawImage(cardImg, 0, 0, canvas.width, canvas.height);
-            drawText(name);
+        if (img.complete) {
+            render(name);
         } else {
-            cardImg.onload = function() {
-                ctx.drawImage(cardImg, 0, 0, canvas.width, canvas.height);
-                drawText(name);
-            };
+            img.onload = () => render(name);
+            img.onerror = () => alert("خطأ: لم يتم العثور على ملف Card.jpg. تأكد من رفعه بجانب هذا الملف.");
         }
-
-        document.getElementById('input-section').style.display = 'none';
-        document.getElementById('output-section').style.display = 'block';
     }
 
-    function drawText(name) {
-        // تطبيق إعدادات الكتابة بناءً على الصورة الأصلية واللون الأسود المطلوب
+    function render(name) {
+        // 1. رسم الخلفية الأصلية (الشعار والكلام القديم)
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // 2. إعدادات الخط (Questv1-Regular كما طلبت)
         ctx.fillStyle = "#000000"; // لون أسود صريح
         ctx.textAlign = "center";
-        
-        // استخدام خط متناسق بوزن 800 ليشابه Questv1-Regular
-        ctx.font = "800 90px 'Questv1', sans-serif"; 
-        
-        // إحداثي y=1340 هو الموقع "القريب جداً" تحت الكلمة المزخرفة كما في طلبك الأول
-        ctx.fillText(name, canvas.width / 2, 1340);
+        ctx.font = "bold 85px 'Questv1', 'Arial'"; // استخدام Questv1 كخيار أول
+
+        // 3. إنزال الاسم للأسفل (الإحداثي 1550 ليكون فوق التاريخ مباشرة)
+        ctx.fillText(name, 540, 1550);
+
+        document.getElementById('input-section').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
     }
 
     function downloadImage() {
         const link = document.createElement('a');
-        link.download = 'Eid_Greeting_AFSSAC.png';
+        link.download = 'AFSSAC_Eid.png';
         link.href = canvas.toDataURL("image/png");
         link.click();
     }
