@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة عيد الفطر - أكاديمية العرب</title>
     <style>
-        /* تعريف الخط ليطابق الفئة المطلوبة */
+        /* تعريف الخط ليطابق المواصفات المطلوبة بالضبط */
         @font-face {
             font-family: "TheSansArab";
             src: url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.woff2') format('woff2');
@@ -13,7 +13,7 @@
             font-style: normal;
         }
 
-        /* الفئة المطلوبة بالضبط */
+        /* الفئة المطلوبة */
         .text-thesans-black {
             font-family: "TheSansArab", sans-serif;
             font-weight: 900;
@@ -22,7 +22,7 @@
         body { font-family: 'Arial', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .card-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 380px; }
         .logo { width: 90px; margin-bottom: 15px; }
-        h2 { color: #1a5e3a; font-size: 22px; margin-bottom: 20px; }
+        h2 { color: #1a5e3a; font-size: 20px; margin-bottom: 20px; }
         input { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 18px; text-align: center; margin-bottom: 20px; box-sizing: border-box; outline: none; }
         .btn { border: none; padding: 15px; border-radius: 12px; font-size: 18px; cursor: pointer; width: 100%; font-weight: bold; }
         .btn-green { background: #1a5e3a; color: white; }
@@ -44,19 +44,22 @@
 <div class="card-container" id="output-section">
     <canvas id="greetingCanvas"></canvas>
     <button class="btn btn-red text-thesans-black" onclick="downloadGreeting()">تحميل الصورة</button>
-    <button class="btn btn-gray text-thesans-black" onclick="location.reload()">تعديل الاسم</button>
+    <button class="btn btn-gray" onclick="location.reload()">تعديل الاسم</button>
 </div>
 
 <script>
     const canvas = document.getElementById('greetingCanvas');
     const ctx = canvas.getContext('2d');
     const bgImage = new Image();
-    bgImage.src = 'Card.jpg';
+    
+    // تأكد أن اسم ملف الصورة الجديدة في GitHub هو Card.jpg (C كبيرة)
+    bgImage.src = 'Card.jpg'; 
 
     function createGreeting() {
         const name = document.getElementById('userName').value.trim();
         if (!name) return alert("من فضلك أدخل الاسم");
 
+        // ضبط أبعاد الكانفاس لتطابق جودة الصورة الجديدة
         canvas.width = 1080;
         canvas.height = 1920;
 
@@ -65,17 +68,20 @@
     }
 
     function draw(name) {
+        // رسم الخلفية الجديدة
         ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
         
-        // الالتزام التام بالخط واللون الأسود
+        // التزام تام بالخط واللون الأسود
         ctx.fillStyle = "#000000";
         ctx.textAlign = "center";
         
-        // تطبيق الفئة text-thesans-black برمجياً على الـ Canvas
-        ctx.font = "900 85px 'TheSansArab', sans-serif";
+        // تطبيق الخط TheSansArab Black برمجياً على الـ Canvas
+        ctx.font = "900 70px 'TheSansArab', sans-serif";
 
-        // المسافة الدقيقة (تحت السطر بمسافة واحدة) كما في طلبك السابق
-        ctx.fillText(name, canvas.width / 2, 1240);
+        // --- التعديل الجوهري لمكان الاسم ---
+        // تم نقل الإحداثي y إلى الأسفل تماماً فوق التاريخ.
+        // التاريخ يقع تقريباً عند 1830، لذا فالإحداثي 1740 هو "مسافة واحدة" فوقه.
+        ctx.fillText(name, canvas.width / 2, 1740);
 
         document.getElementById('input-section').style.display = 'none';
         document.getElementById('output-section').style.display = 'block';
