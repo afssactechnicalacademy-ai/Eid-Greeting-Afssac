@@ -72,15 +72,15 @@
     function drawText(name) {
         // --- تطبيق التعديلات الجوهرية ---
         
-        // 1. اللون: تغيير من الأسود ليكون بني داكن يشابه لون "عيد مبارك"
-        ctx.fillStyle = "#8B6F47"; 
+        // 1. اللون: تغيير من البني الداكن إلى الأسود الصريح
+        ctx.fillStyle = "#000000"; 
         ctx.textAlign = "center";
         
-        // 2. نوع الخط والوزن: استخدام Questv1-Regular (ألغيت Bold)
+        // 2. نوع الخط والوزن: الحفاظ على Questv1-Regular
         ctx.font = "normal 90px 'Questv1', sans-serif"; 
         
-        // 3. المكان (1550): إنزال الاسم تحت الزخرفة الرمادية وفوق التاريخ
-        ctx.fillText(name, canvas.width / 2, 1550);
+        // 3. المكان (1700): إنزال الاسم ليكون في أسفل البطاقة تماماً فوق التاريخ
+        ctx.fillText(name, canvas.width / 2, 1700);
     }
 
     function downloadImage() {
