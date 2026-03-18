@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بطاقة تهنئة أكاديمية العرب</title>
     <style>
-        /* تحميل الخط المطلوب */
         @font-face {
             font-family: "TheSansArab";
             src: url('https://db.onlinewebfonts.com/t/215106c107ed3f7d88566a7b065a0fa0.woff2') format('woff2');
             font-weight: 900;
         }
-
         body { font-family: 'Arial', sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .setup-box { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); width: 350px; }
         input { width: 100%; padding: 12px; margin: 20px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 18px; text-align: center; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
         .btn-create { background: #1a5e3a; color: white; }
         .btn-download { background: #d1202f; color: white; margin-top: 15px; }
         #display-section { display: none; }
-        canvas { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+        canvas { width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="setup-box" id="input-section">
     <h3 style="margin-top:0">أدخل اسم المهنئ</h3>
-    <input type="text" id="userName" placeholder="اكتب الاسم هنا..." maxlength="50">
-    <button class="btn-create" onclick="processImage()">إنشاء البطاقة الآن</button>
+    <input type="text" id="userName" placeholder="اكتب الاسم هنا..." maxlength="40">
+    <button class="btn-create" onclick="processImage()">إنشاء البطاقة</button>
 </div>
 
 <div class="setup-box" id="display-section">
@@ -40,37 +38,31 @@
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
     const background = new Image();
-    
-    // تأكد أن الصورة في GitHub اسمها Card.jpg بنفس الحروف
-    background.src = 'Card.jpg';
+    background.src = 'Card.jpg'; 
 
     function processImage() {
         const name = document.getElementById('userName').value.trim();
         if (!name) return alert("من فضلك اكتب الاسم");
 
-        // مقاسات الصورة الأصلية (1080 عرض × 1920 طول)
         canvas.width = 1080;
         canvas.height = 1920;
 
-        if (background.complete) {
-            render(name);
-        } else {
-            background.onload = () => render(name);
-        }
+        if (background.complete) { render(name); } 
+        else { background.onload = () => render(name); }
     }
 
     function render(name) {
-        // 1. رسم الخلفية
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         
-        // 2. إعدادات الخط (TheSansArab Black - وزن 900)
+        // إعدادات الخط الأسود العريض
         ctx.fillStyle = "#000000";
         ctx.textAlign = "center";
-        ctx.font = "900 80px 'TheSansArab', sans-serif";
+        ctx.font = "900 65px 'TheSansArab', sans-serif";
 
-        // 3. الموقع الصحيح (فوق التاريخ مباشرة)
-        // بناءً على المعاينة الأخيرة، الموقع 1550 هو الأدق فوق سطر التاريخ
-        ctx.fillText(name, canvas.width / 2, 1550);
+        // الضبط القاتل للمكان:
+        // الإحداثي 1380 هو الفراغ الأبيض "الآمن" تحت كلمة Eid Mubarak
+        // كده الاسم مش هيلمس الزخرفة السوداء اللي على اليمين ولا التاريخ اللي تحت
+        ctx.fillText(name, 720, 1380); 
 
         document.getElementById('input-section').style.display = 'none';
         document.getElementById('display-section').style.display = 'block';
@@ -83,6 +75,5 @@
         link.click();
     }
 </script>
-
 </body>
 </html>
